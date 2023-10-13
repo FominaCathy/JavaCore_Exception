@@ -17,6 +17,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
@@ -39,7 +42,7 @@
     "settings.editor.selected.configurable": "MavenSettings"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.gb.task_function.game.Main">
+  <component name="RunManager" selected="Application.gb.task_function.double_zero.Main">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gb.task_function.game.Game" />
       <module name="Jcore" />
@@ -94,9 +97,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.gb.task_function.double_zero.Main" />
         <item itemvalue="Application.gb.task_function.game.Main" />
         <item itemvalue="Application.Game" />
-        <item itemvalue="Application.gb.task_function.double_zero.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>

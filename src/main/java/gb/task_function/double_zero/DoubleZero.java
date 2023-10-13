@@ -7,7 +7,7 @@ public class DoubleZero {
      * @param array целочисленный массив
      * @return true / false
      */
-    private static boolean checkDoubleZero(int[] array) {
+    public static boolean checkDoubleZero(int[] array) {
 
         boolean flag = false;
         int start = 0;
@@ -22,7 +22,7 @@ public class DoubleZero {
         return flag;
     }
 
-    public static String doubleZeroArray(int[] array) {
+    private static String doubleZeroArray(int[] array) {
 
         String msg;
 
