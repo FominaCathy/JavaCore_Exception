@@ -31,12 +31,12 @@ public class Employee extends Person {
         return departament;
     }
 
-    private boolean setSalary(double salary) {
-        if (salary < 0) {
-            return false;
+    private void setSalary(double salary) throws RuntimeException {
+        if (salary <= 0){
+            throw new RuntimeException("Нельзя установить з/п = " + salary);
         }
         this.salary = salary;
-        return true;
+
     }
 
     //TODO где от должен быть?

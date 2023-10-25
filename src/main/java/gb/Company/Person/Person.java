@@ -14,6 +14,7 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        //TODO проверка даты
         this.birtDay = birtDay;
     }
 

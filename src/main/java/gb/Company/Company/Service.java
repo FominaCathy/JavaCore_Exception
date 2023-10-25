@@ -1,46 +1,34 @@
 package gb.Company.Company;
 
 import gb.Company.Person.Employee;
+import gb.Company.Person.Posts;
 import gb.Company.Tasks.Status;
 import gb.Company.Tasks.Task;
 
 import java.util.ArrayList;
 
 public class Service {
-
     PlannerTasks plannerTasks;
     StaffEmployees company;
 
     public Service() {
         this.plannerTasks = new PlannerTasks();
         this.company = new StaffEmployees();
-
     }
 
-    /**
-     * печать списка задач
-     */
-    public void printPlanner() {
-        System.out.println("List planner:");
-        for (Task item : plannerTasks.getTaskList()) {
-            System.out.print(item.toString());
-            if (item.getExecutor() != null) {
-                System.out.println(
-                        " - EXECUTOR: " + item.getExecutor().getFirstName() + " " + item.getExecutor().getLastName());
-            } else {
-                System.out.println(" - EXECUTOR: ---");
-            }
-
-        }
-        System.out.println("------");
-    }
 
     /**
      * добавление задачи в список задач
+     *
      * @param task - задача
      */
     public void addTask(Task task) {
-        plannerTasks.addTask(task);
+        try {
+            plannerTasks.addTask(task);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     /**
@@ -53,7 +41,8 @@ public class Service {
     }
 
     /**
-     * добавление сотрудника
+     * добавление сотрудника в штат
+     *
      * @param employee сотрудник или руководитель
      */
     public void addEmployee(Employee employee) {
@@ -62,20 +51,21 @@ public class Service {
 
     /**
      * изменение з/п всем сотрудникам, старше указанного возраста
-     * @param age - возраст
+     *
+     * @param age       - возраст
      * @param sumChange - сумма изменения
      * @return
      */
-    public boolean changeSalaryAll( int age, double sumChange) {
-
+    public boolean changeSalaryAll(int age, double sumChange) {
         for (Employee employee : this.company.getStaff()) {
-            employee.changeSalary(age, employee.getSalary() + sumChange);
+            employee.changeSalary(age, sumChange);
         }
         return true;
     }
 
     /**
      * расчет среднего возраста в компании
+     *
      * @return средний возраст в компании
      */
     public double averageAge() {
@@ -84,11 +74,12 @@ public class Service {
             sumAge += employee.getAge();
         }
 
-        return  sumAge / this.company.getStaff().size();
+        return sumAge / this.company.getStaff().size();
     }
 
     /**
      * расчет средней з/п в компании
+     *
      * @return средняя з/п в компании
      */
     public double averageSalary() {
@@ -114,139 +105,137 @@ public class Service {
 
     /**
      * назначение задачи по ее номеру на исполнителя
+     *
      * @param numberTask - номер задачи
-     * @param fullName - полное имя исполнителя
+     * @param fullName   - полное имя исполнителя
      */
     public void setExecutorTask(int numberTask, String fullName) {
         Employee executor = company.getForName(fullName);
         Task task = plannerTasks.getForId(numberTask);
-
         task.setExecutor(executor);
-
     }
 
     /**
      * печать всех задач сотрудника
+     *
      * @param fullName - полное имя сотрудника
      */
-    public void printAllTaskEmployee(String fullName) {
+    public void printWorkTaskEmployee(String fullName) {
         Employee employee = company.getForName(fullName);
         System.out.println("Task list " + fullName);
-        boolean flag = false;
-        for (Task task : plannerTasks.taskList) {
-            if ((task.getExecutor() != null) && (task.getExecutor().equals(employee))) {
-                System.out.println(task.toString() );
-                flag = true;
-            }
-        }
-        if (!flag) {
+        ArrayList<Task> taskList = plannerTasks.getTasksEmployee(employee);
+        if (taskList.isEmpty()) {
             System.out.println("Task not found \n");
-        }
+        } else
+            for (Task task : taskList) {
+                if (!task.getStatus().equals(Status.CLOSE)) {
+                    System.out.println(task.toString());
+                }
+            }
     }
 
     /**
      * взятие задачи в работу
+     *
      * @param fullName - полное имя исполителя
-     * @param idTask - id номер задачи
+     * @param idTask   - id номер задачи
      */
     public void StartTask(String fullName, int idTask) {
-
-        if (setStatusTask(Status.PROGRESS, fullName, idTask)) {
-            System.out.println("Статус изменен на :" + Status.PROGRESS.toString() +"\n");
-        } else {
-            System.out.println("Что-то пошло не так \n");
-        }
-        ;
+        setStatusTask(Status.PROGRESS, fullName, idTask);
     }
 
     /**
      * закрытие задачи
+     *
      * @param fullName - полное имя исполителя
-     * @param idTask - id номер задачи
+     * @param idTask   - id номер задачи
      */
-    public void FinishTask(String fullName, int idTask) {
-
-        if (setStatusTask(Status.CLOSE, fullName, idTask)) {
-            System.out.println("Статус изменен на :" + Status.CLOSE.toString());
-        } else {
-            System.out.println("Что-то пошло не так");
-        }
-        ;
+    public void CloseTask(String fullName, int idTask) {
+        setStatusTask(Status.CLOSE, fullName, idTask);
     }
 
     /**
-     * изменение статуса задачи. изменить статус задачи может только сотрудник департамента которому принадлежит исполнитель
-     * (сам сотридник либо менеджер его департамента)
+     * изменение статуса задачи.
      *
      * @param status   - устанавливаемый статус
      * @param fullName - полное имя исполителя
      * @param idTask   - id номер задачи
-     * @return - возвращает успешность операции
      */
-    private boolean setStatusTask(Status status, String fullName, int idTask) {
+    private void setStatusTask(Status status, String fullName, int idTask) {
         Employee employee = company.getForName(fullName);
         Task task = plannerTasks.getForId(idTask);
-        // либо сам менеджер либо менеджер из его департамента
-        if ((task.getExecutor() != null) && (task.getExecutor().getDepartament().equals(employee.getDepartament()))) {
-            task.setStatus(status);
+
+        try {
             if (status == Status.PROGRESS) {
-                task.setDataStart();
+                plannerTasks.startTask(task, employee);
             } else if (status == Status.CLOSE) {
-                task.setDataFinish();
+                plannerTasks.closeTask(task, employee);
             }
-        } else {
-
-            return false;
+            System.out.println("Статус задачи изменен на :" + status.getTitle());
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
-        return true;
     }
-
-    //метод повышения з/п, модифицируйте метод таким образом, чтобы он мог поднять з/п всем, кроме руководителей.
 
     /**
      * повышение з/п всем кроме руководителей
+     *
      * @param sum
      */
     public void increaseSalary(double sum) {
-        for (Employee item : this.company.getStaff()) {
-            if (item.getClass().equals(Employee.class)){
-                item.changeSalary(0, 10000);
+        try {
+            for (Employee item : this.company.getStaff()) {
+                if (item.getClass().equals(Employee.class)) {
+                    item.changeSalary(0, 10000);
+                }
             }
-
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+
+    public void printPlanner() {
+        printList(plannerTasks.getListPlanner(), "List Planner");
 
     }
 
-    /**
-     * назначение задачи с учетом приоритета: если у исполнителя есть менее приоритетная задача -
-     * то ей устанавлвается статус inHold (удержание)
-     *
-     * @param idTask   - id номер задачи
-     * @param fullName - полное имя исполнителя
-     */
-    public void setExecutorTaskOrderPriority(int idTask, String fullName) {
-        Employee employee = company.getForName(fullName);
-        Task task = plannerTasks.getForId(idTask);
+    public void printListWaiting() {
+        printList(plannerTasks.getListWaiting(), "List Waiting");
+    }
 
-        ArrayList<Task> taskListEmployee = new ArrayList<>();
-        for (Task item : plannerTasks.taskList) {
-            if ((item.getExecutor() != null) && (item.getExecutor().equals(employee))) {
-                taskListEmployee.add(item);
+    private void printList(ArrayList<Task> list, String description) {
+        System.out.println(description + ":");
+        for (Task item : list) {
+            if (item.getExecutor() == null) {
+                System.out.println(item.toString());
+            } else {
+                System.out.print(item.toString());
+                System.out.println(
+                        " - EXECUTOR: " + item.getExecutor().getFirstName() + " " + item.getExecutor().getLastName());
             }
         }
+        System.out.println("------");
+        ;
+    }
 
-        if (!taskListEmployee.isEmpty()) {
-            // выбираем менее приоритетную задачу
-            Task currTask = task;
-            for (Task item : taskListEmployee) {
-                if (currTask.getStatus().ordinal() < item.getStatus().ordinal()) {
-                    currTask = item;
+    /**
+     * нераспределенныее задачи будут распределены по менеджерам у которых сейчас нет задач в работе
+     * автоматически назначается только 1 задача на свободного менедера в порядкее приоритета задач и времени ее заведения
+     * (если необходимо назначить несколько задач - можно сделать это вручную)
+     */
+    public void autoSetExecutor() {
+        for (Employee employee : this.company.getStaff()) {
+            if ((employee.getPost() != Posts.CHIEF) && (plannerTasks.getTasksEmployee(employee).isEmpty())) {
+                try {
+                    plannerTasks.getListWaiting().get(0).setExecutor(employee);
+                    //если список пустой и назаначать нечего
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("список нераспределенных задач пуст");
+                    return;
                 }
             }
-            currTask.setStatus(Status.ONHOLD); //устанавливаем менее приоритетной задаче статус ONHOLD
-
         }
-        task.setExecutor(employee); // назначаем новую задачу на исполнителя
     }
 }
 
