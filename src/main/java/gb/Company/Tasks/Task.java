@@ -2,11 +2,12 @@ package gb.Company.Tasks;
 
 import gb.Company.Person.Employee;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
-public class Task implements Comparator<Task> {
+public class Task implements Comparator<Task>, Serializable {
     private String description;
     private Priority priority;
     private Status status;
@@ -51,8 +52,11 @@ public class Task implements Comparator<Task> {
     }
 
     public void setExecutor(Employee executor) {
-
-        this.executor = executor;
+        if (executor == null){
+            System.out.println("не указан исполнитель");
+        } else {
+            this.executor = executor;
+        }
     }
 
     /**

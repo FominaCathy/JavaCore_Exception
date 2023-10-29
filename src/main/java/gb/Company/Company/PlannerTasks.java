@@ -6,12 +6,13 @@ import gb.Company.Tasks.PriorityTaskComparator;
 import gb.Company.Tasks.Status;
 import gb.Company.Tasks.Task;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * класс для работы с задачами. Сначала задача попадает в Backlog, после назначения  исполнителя - в планнер
  */
-public class PlannerTasks {
+public class PlannerTasks implements Serializable {
     private ArrayList<Task> backlog;
 
 
@@ -93,6 +94,7 @@ public class PlannerTasks {
                 return task;
             }
         }
+        System.out.println("задача с таким ID не найдена");
         return null;
     }
 

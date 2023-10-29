@@ -1,20 +1,20 @@
 package gb.Company.Person;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Person {
+public class Person implements Serializable {
 
     protected String firstName;
     protected String lastName;
     protected String phone;
-    protected Date birtDay;
+    protected LocalDate birtDay;
 
-    public Person(String firstName, String lastName, Date birtDay, String phone) {
+    public Person(String firstName, String lastName, LocalDate birtDay, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-        //TODO проверка даты
         this.birtDay = birtDay;
     }
 

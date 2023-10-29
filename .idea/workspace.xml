@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3aa3132f-c30e-4812-b396-833ff4159409" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/DataTaskComparator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/PriorityTaskComparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exeEmp.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exePlan.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Company/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/ConsoleUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/MainMenu/CommandMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Presentor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Company/Departament.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Company/Departament.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Company/PlannerTasks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Company/PlannerTasks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Company/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Company/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Company/StaffEmployees.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Company/StaffEmployees.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Chief.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Chief.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Employee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Posts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Person/Posts.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,15 +32,21 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -58,6 +69,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\_GB\Jcore\src\main\java\gb\LessonException" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="gb.Animals" />
     </key>
@@ -137,18 +151,41 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="exception" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Task.java</url>
-          <line>72</line>
+          <line>76</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gb/Company/Tasks/Task.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/main/java/gb/Company/Company/Service.java</url>
+          <line>252</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -161,6 +198,7 @@
       <configuration name="Application">
         <watch expression="task.getExecutor()" language="JAVA" />
         <watch expression="item.getClass().equals(Employee.class)" language="JAVA" />
+        <watch expression="Menu.getListMenu().size()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>

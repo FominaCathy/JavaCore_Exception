@@ -1,11 +1,11 @@
 package gb.Company.Person;
 
 public enum Posts {
-    WRITER ("writer"),
-    ENGINEER ("engineer"),
-    ADMIN ("admin"),
-    WIZARD ("wizard"),
-    CHIEF ("Chief of departament");
+    WRITER ("Writer"),
+    ENGINEER ("Engineer"),
+    ADMIN ("Admin"),
+    WIZARD ("Wizard"),
+    CHIEF ("Chief");
 
     private String title;
 

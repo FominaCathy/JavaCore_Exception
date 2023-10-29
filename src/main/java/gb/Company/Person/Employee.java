@@ -2,6 +2,7 @@ package gb.Company.Person;
 
 import gb.Company.Company.Departament;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Employee extends Person {
@@ -10,7 +11,7 @@ public class Employee extends Person {
     protected Departament departament;
 
 
-    public Employee(String firstName, String lastName, Date birtDay, String phone, Posts post, double salary) {
+    public Employee(String firstName, String lastName, LocalDate birtDay, String phone, Posts post, double salary) {
         super(firstName, lastName, birtDay, phone);
         this.post = post;
         this.salary = salary;
@@ -32,7 +33,7 @@ public class Employee extends Person {
     }
 
     private void setSalary(double salary) throws RuntimeException {
-        if (salary <= 0){
+        if (salary <= 0) {
             throw new RuntimeException("Нельзя установить з/п = " + salary);
         }
         this.salary = salary;
@@ -65,6 +66,14 @@ public class Employee extends Person {
                 "post: " + this.post.getTitle() + "\n" +
                 "phone: " + this.phone + "\n" +
                 "salary: " + this.salary + " rub\n";
+        return info;
+    }
+
+    public String shortInfo() {
+
+        String info = "Name: " + " " + this.firstName + " " + this.lastName + "\t " +
+                "Post: " + this.post.getTitle() + "\t" +
+                "Dep.: " + this.getDepartament().getTitle();
         return info;
     }
 

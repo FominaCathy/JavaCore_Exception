@@ -5,6 +5,7 @@ import gb.Company.Person.Posts;
 import gb.Company.Tasks.Status;
 import gb.Company.Tasks.Task;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Service {
@@ -32,11 +33,12 @@ public class Service {
     }
 
     /**
-     * печать списка сотрудников с полной инф-ции о них
+     * печать списка сотрудников с краткой инф-цией о них
      */
-    public void printEmployee() {
+    public void printListEmployee() {
+
         for (Employee item : company.getStaff()) {
-            System.out.println(item.toString());
+            System.out.println(item.shortInfo());
         }
     }
 
@@ -112,7 +114,10 @@ public class Service {
     public void setExecutorTask(int numberTask, String fullName) {
         Employee executor = company.getForName(fullName);
         Task task = plannerTasks.getForId(numberTask);
-        task.setExecutor(executor);
+
+        if ((task != null) && (executor != null)) {
+            task.setExecutor(executor);
+        }
     }
 
     /**
@@ -122,16 +127,20 @@ public class Service {
      */
     public void printWorkTaskEmployee(String fullName) {
         Employee employee = company.getForName(fullName);
+        if (employee == null) {
+            return;
+        }
         System.out.println("Task list " + fullName);
         ArrayList<Task> taskList = plannerTasks.getTasksEmployee(employee);
         if (taskList.isEmpty()) {
             System.out.println("Task not found \n");
-        } else
+        } else {
             for (Task task : taskList) {
                 if (!task.getStatus().equals(Status.CLOSE)) {
                     System.out.println(task.toString());
                 }
             }
+        }
     }
 
     /**
@@ -140,7 +149,7 @@ public class Service {
      * @param fullName - полное имя исполителя
      * @param idTask   - id номер задачи
      */
-    public void StartTask(String fullName, int idTask) {
+    public void startTask(String fullName, int idTask) {
         setStatusTask(Status.PROGRESS, fullName, idTask);
     }
 
@@ -150,7 +159,7 @@ public class Service {
      * @param fullName - полное имя исполителя
      * @param idTask   - id номер задачи
      */
-    public void CloseTask(String fullName, int idTask) {
+    public void closeTask(String fullName, int idTask) {
         setStatusTask(Status.CLOSE, fullName, idTask);
     }
 
@@ -197,7 +206,6 @@ public class Service {
 
     public void printPlanner() {
         printList(plannerTasks.getListPlanner(), "List Planner");
-
     }
 
     public void printListWaiting() {
@@ -237,5 +245,44 @@ public class Service {
             }
         }
     }
+
+    public void exportDataBase(String nameFile) throws IOException {
+
+        try {
+            ObjectOutputStream oosEmployee = new ObjectOutputStream(new FileOutputStream(nameFile + "Emp.txt"));
+            oosEmployee.writeObject(this.company);
+
+            FileOutputStream fileOutputPlanner = new FileOutputStream(nameFile + "Plan.txt");
+            ObjectOutputStream exportPlanner = new ObjectOutputStream(fileOutputPlanner);
+            exportPlanner.writeObject(this.plannerTasks);
+
+
+        } catch (IOException e) {
+            System.out.println("ошибка выгрузки: " + e.getMessage());
+        }
+
+    }
+
+    public void importDataBase(String nameFile) throws IOException {
+
+        try {
+            FileInputStream fileInputEmployee = new FileInputStream(nameFile + "Emp.txt");
+            ObjectInputStream importEmployee = new ObjectInputStream(fileInputEmployee);
+            this.company = (StaffEmployees) importEmployee.readObject();
+
+            FileInputStream fileInputPlanner = new FileInputStream(nameFile + "Plan.txt");
+            ObjectInputStream importPlanner = new ObjectInputStream(fileInputPlanner);
+            this.plannerTasks = (PlannerTasks) importPlanner.readObject();
+
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }
 
